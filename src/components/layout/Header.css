@@ -1,0 +1,13 @@
+@reference "../../index.css";
+
+.header-inner {
+  @apply max-w-3xl mx-auto px-4 py-4 flex items-center justify-between;
+}
+
+.header-logo {
+  @apply text-xl font-bold tracking-tight;
+}
+
+.header-nav {
+  @apply flex gap-4 text-sm text-muted-foreground;
+}

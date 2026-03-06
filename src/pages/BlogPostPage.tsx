@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import { useBlogPost } from '@/hooks/useBlogPost'
+import './BlogPostPage.css'
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -18,27 +19,20 @@ export function BlogPostPage() {
         <h1 className="text-3xl font-bold">{post.frontMatter.title}</h1>
         <p className="text-sm text-muted-foreground">{post.frontMatter.date}</p>
         {post.frontMatter.tags && (
-          <div className="flex gap-2 flex-wrap">
+          <div className="tag-list">
             {post.frontMatter.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs bg-secondary text-secondary-foreground px-2 py-0.5 rounded-full"
-              >
-                {tag}
-              </span>
+              <span key={tag} className="tag">{tag}</span>
             ))}
           </div>
         )}
       </header>
-      <div className="prose prose-neutral dark:prose-invert max-w-none">
+      <div className="post-content">
         <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
           {post.content}
         </ReactMarkdown>
       </div>
       <footer>
-        <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-          ← Back to all posts
-        </Link>
+        <Link to="/" className="back-link">← Back to all posts</Link>
       </footer>
     </article>
   )

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useBlogPosts } from '@/hooks/useBlogPosts'
+import './BlogListPage.css'
 
 export function BlogListPage() {
   const { posts, loading, error } = useBlogPosts()
@@ -14,23 +15,16 @@ export function BlogListPage() {
       <ul className="space-y-6">
         {posts.map((post) => (
           <li key={post.frontMatter.slug}>
-            <Link to={`/blog/${post.frontMatter.slug}`} className="group block space-y-1">
-              <h2 className="text-xl font-semibold group-hover:underline">
-                {post.frontMatter.title}
-              </h2>
+            <Link to={`/blog/${post.frontMatter.slug}`} className="group post-link">
+              <h2 className="post-title">{post.frontMatter.title}</h2>
               <p className="text-sm text-muted-foreground">{post.frontMatter.date}</p>
               {post.frontMatter.description && (
                 <p className="text-muted-foreground">{post.frontMatter.description}</p>
               )}
               {post.frontMatter.tags && (
-                <div className="flex gap-2 flex-wrap">
+                <div className="tag-list">
                   {post.frontMatter.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs bg-secondary text-secondary-foreground px-2 py-0.5 rounded-full"
-                    >
-                      {tag}
-                    </span>
+                    <span key={tag} className="tag">{tag}</span>
                   ))}
                 </div>
               )}

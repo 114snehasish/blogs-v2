@@ -1,0 +1,18 @@
+@reference "../index.css";
+
+/* prose-* classes require @tailwindcss/typography — install with: pnpm add @tailwindcss/typography */
+.post-content {
+  @apply max-w-none;
+}
+
+.tag-list {
+  @apply flex gap-2 flex-wrap;
+}
+
+.tag {
+  @apply text-xs bg-secondary text-secondary-foreground px-2 py-0.5 rounded-full;
+}
+
+.back-link {
+  @apply text-sm text-muted-foreground hover:text-foreground transition-colors;
+}

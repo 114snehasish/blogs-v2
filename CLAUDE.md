@@ -86,6 +86,16 @@ When deploying as a static site (e.g. GitHub Pages, Netlify, Cloudflare Pages), 
 
 `@/` maps to `src/`. Configured in both `vite.config.ts` and `tsconfig.app.json`.
 
+## Styling convention
+
+**Any element with more than 2 Tailwind utility classes must be extracted into a named CSS class in a component-level CSS file using `@apply`.**
+
+- Every component/page that needs custom classes gets its own `.css` file alongside it (e.g. `Header.tsx` → `Header.css`).
+- Import it directly in the component: `import './Header.css'`
+- Name classes semantically after their role, not their appearance (e.g. `.post-title`, not `.text-xl-bold`).
+- Each component CSS file must start with `@reference "../index.css"` (adjust the relative path depth) so Tailwind v4 can resolve `@apply` classes.
+- Exception: Tailwind variant-modifier classes like `group` and `peer` cannot be used inside `@apply` — keep those inline in JSX and apply the rest via CSS class.
+
 ## Future: WordPress migration
 
 The existing WordPress site is at `https://blogs.snehasish-chakraborty.com`. Migration plan: export posts as Markdown files into the content repo with correct frontmatter, matching slugs to preserve URLs.

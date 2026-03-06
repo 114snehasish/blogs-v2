@@ -1,0 +1,17 @@
+@reference "../index.css";
+
+.post-link {
+  @apply block space-y-1;
+}
+
+.post-title {
+  @apply text-xl font-semibold group-hover:underline;
+}
+
+.tag-list {
+  @apply flex gap-2 flex-wrap;
+}
+
+.tag {
+  @apply text-xs bg-secondary text-secondary-foreground px-2 py-0.5 rounded-full;
+}

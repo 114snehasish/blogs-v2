@@ -1,0 +1,9 @@
+@reference "../../index.css";
+
+.layout-root {
+  @apply min-h-screen bg-background text-foreground;
+}
+
+.layout-main {
+  @apply max-w-3xl mx-auto px-4 py-8;
+}

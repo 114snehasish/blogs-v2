@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
+import './Header.css'
 
 export function Header() {
   return (
     <header className="border-b border-border">
-      <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold tracking-tight">
+      <div className="header-inner">
+        <Link to="/" className="header-logo">
           Snehasish Chakraborty
         </Link>
-        <nav className="flex gap-4 text-sm text-muted-foreground">
+        <nav className="header-nav">
           <Link to="/" className="hover:text-foreground transition-colors">Blog</Link>
           <Link to="/about" className="hover:text-foreground transition-colors">About</Link>
         </nav>
