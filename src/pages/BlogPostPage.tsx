@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import { useBlogPost } from '@/hooks/useBlogPost'
+import 'highlight.js/styles/github-dark.css'
 import './BlogPostPage.css'
 
 export function BlogPostPage() {
@@ -13,8 +14,16 @@ export function BlogPostPage() {
   if (error) return <p className="text-destructive">Failed to load post: {error.message}</p>
   if (!post) return <p className="text-muted-foreground">Post not found.</p>
 
+  const heroImage =
+    post.frontMatter.coverImageResolutions?.large ??
+    post.frontMatter.coverImageResolutions?.full ??
+    post.frontMatter.coverImage
+
   return (
     <article className="space-y-6">
+      {heroImage && (
+        <img src={heroImage} alt={post.frontMatter.title} className="post-hero-image" />
+      )}
       <header className="space-y-2">
         <h1 className="text-3xl font-bold">{post.frontMatter.title}</h1>
         <p className="text-sm text-muted-foreground">{post.frontMatter.date}</p>

@@ -16,6 +16,13 @@ export function BlogListPage() {
         {posts.map((post) => (
           <li key={post.frontMatter.slug}>
             <Link to={`/blog/${post.frontMatter.slug}`} className="group post-link">
+              {(post.frontMatter.coverImageResolutions?.medium ?? post.frontMatter.coverImage) && (
+                <img
+                  src={post.frontMatter.coverImageResolutions?.medium ?? post.frontMatter.coverImage}
+                  alt={post.frontMatter.title}
+                  className="post-cover-thumb"
+                />
+              )}
               <h2 className="post-title">{post.frontMatter.title}</h2>
               <p className="text-sm text-muted-foreground">{post.frontMatter.date}</p>
               {post.frontMatter.description && (
