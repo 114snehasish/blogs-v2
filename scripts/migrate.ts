@@ -15,6 +15,7 @@
 
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { fileURLToPath } from 'url'
 import { fetchAllPosts } from './lib/wordpress.js'
 import {
   downloadFeaturedImage,
@@ -29,7 +30,8 @@ const POSTS_DIR = join(PROJECT_ROOT, 'assets', 'posts')
 
 function parseArgs(argv: string[]): { siteUrl: string; force: boolean; slug?: string } {
   const args = argv.slice(2)
-  const siteUrl = args.find((a) => !a.startsWith('--')) ?? ''
+  const siteUrl =
+    args.find((a) => a.startsWith('http://') || a.startsWith('https://')) ?? ''
   const force = args.includes('--force')
   const slugArg = args.find((a) => a.startsWith('--slug='))
   const slug = slugArg ? slugArg.split('=')[1] : undefined
@@ -113,6 +115,15 @@ export async function scrapeWordPress(
   console.log('\n✅ Migration complete.')
 }
 
-// CLI entry point
-const { siteUrl, force, slug } = parseArgs(process.argv)
-await scrapeWordPress(siteUrl, { force, slug })
+// CLI entry point — ESM equivalent of Node's `if (require.main === module)`.
+//
+// process.argv[1] is the file Node was told to execute.
+//   - `pnpm migrate https://...`  → argv[1] is this file's path  → condition is true  → CLI runs
+//   - imported by the Vite plugin → argv[1] is vite's entrypoint → condition is false → CLI skipped
+//
+// Without this guard, parseArgs() and scrapeWordPress() would fire every time this
+// module is imported, including when `plugins/wordpress-sync.ts` imports scrapeWordPress.
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const { siteUrl, force, slug } = parseArgs(process.argv)
+  await scrapeWordPress(siteUrl, { force, slug })
+}

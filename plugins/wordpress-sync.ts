@@ -35,7 +35,11 @@ export function wordpressSync(options: WordPressSyncOptions): Plugin {
         return
       }
       console.log(`[wordpress-sync] Syncing content from ${options.siteUrl} ...`)
-      await scrapeWordPress(options.siteUrl, { force: options.force ?? false })
+      try {
+        await scrapeWordPress(options.siteUrl, { force: options.force ?? false })
+      } catch (err) {
+        console.warn('[wordpress-sync] Sync failed — proceeding with existing cached content.', err)
+      }
     },
   }
 }
